@@ -137,7 +137,7 @@ if($config.Config.AddFeatures.Feature) {
 if($config.Config.EnableFeatures.Feature) {
 	$config.Config.EnableFeatures.Feature | ForEach-Object {
 		Write-Host "Enabling Windows feature: $_"
-		Enable-WindowsOptionalFeature -Online -FeatureName $_
+		Enable-WindowsOptionalFeature -Online -FeatureName $_ -NoReboot
 	}
 }
 
