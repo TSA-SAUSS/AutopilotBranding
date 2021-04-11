@@ -24,8 +24,10 @@ Write-Host "Loading configuration: $PSScriptRoot\Config.xml"
 [Xml]$config = Get-Content "$PSScriptRoot\Config.xml"
 
 #Load the default user registry hive
-Write-Host "Load the default user registry hive"
-reg.exe load HKLM\TempUser "$env:SystemDrive\Users\Default\NTUSER.DAT" | Out-Host
+if($config.Config.Theme -or $config.Config.SearchboxTaskbarMode -or $config.Config.ShowCortanaButton -or $config.Config.ShowTaskViewButton) {
+	Write-Host "Load the default user registry hive"
+	reg.exe load HKLM\TempUser "$env:SystemDrive\Users\Default\NTUSER.DAT" | Out-Host
+}
 
 # STEP 1: Apply custom start menu and taskbar layout
 if ($config.Config.StartMenuLayout) {
@@ -225,6 +227,23 @@ if($config.Config.Delete3DObjectsLink -eq 1) {
 
 #Unload the default user registry hive
 Write-Host "Unload the default user registry hive"
-reg.exe unload HKLM\TempUser | Out-Host
+if($config.Config.Theme -or $config.Config.SearchboxTaskbarMode -or $config.Config.ShowCortanaButton -or $config.Config.ShowTaskViewButton) {
+	$unloaded = $false
+	$attempts = 0
+	while ((-not $unloaded) -and ($attempts -le 10)) {
+		[gc]::Collect() # necessary call to be able to unload registry hive
+		& reg.exe unload HKLM\TempUser
+		$unloaded = $?
+		$attempts += 1
+	}
+	if (!$unloaded) {
+		Write-Warning "Unable to dismount default user registry hive at HKLM\TempUser - manual dismount required"
+	}
+}
 
 Stop-Transcript
+
+if($config.Config.Theme -or $config.Config.SearchboxTaskbarMode -or $config.Config.ShowCortanaButton -or $config.Config.ShowTaskViewButton) {
+	#Soft Restart
+	Exit 3010
+}

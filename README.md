@@ -38,6 +38,8 @@ The uninstall command line should be:
 
 cmd.exe /c del %ProgramData%\Microsoft\AutopilotBranding\AutopilotBranding.ps1.tag
 
+The device restart behavior should be "Determine behavior based on return codes."  If the default user registry hive is edited then 3010 will be returned, indicating the device should reset at the end of device setup.
+
 The detection rule should look for the existence of this file:
 
 Path: %ProgramData%\Microsoft\AutopilotBranding
