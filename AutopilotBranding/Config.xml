@@ -68,7 +68,10 @@
   <Theme>Theme.Theme</Theme>
   -->  
 
+  <!-- Uncomment to set the Start Menu and Taskbar.  If you set the taskbar this way then the apps, if unpinned, we be re-pinned
+  whenever Explorer is restarted.  Consider using an InTune configuration profile instead.
   <StartMenuLayout>LayoutModification.xml</StartMenuLayout>
+  -->
   <DisableEdgeDesktopShortcutCreation>1</DisableEdgeDesktopShortcutCreation>
   <EnableUEV>0</EnableUEV>
   <NewNetworkWindowOff>0</NewNetworkWindowOff>

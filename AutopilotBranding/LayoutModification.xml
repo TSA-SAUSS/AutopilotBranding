@@ -5,7 +5,7 @@
   xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"
   Version="1">
   <LayoutOptions StartTileGroupCellWidth="6" />
-  <DefaultLayoutOverride>
+  <DefaultLayoutOverride LayoutCustomizationRestrictionType="OnlySpecifiedGroups">
     <StartLayoutCollection>
       <defaultlayout:StartLayout GroupCellWidth="6" />
     </StartLayoutCollection>
